@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `cozinha_criativa`.`metas` (
   `ano_prod` SMALLINT NOT NULL COMMENT 'Contém o ano relativo a produção da receita.\n\n\nExemplo:\n\n2024\n2023\n2020',
   `mes_prod` SMALLINT NOT NULL COMMENT 'Contém o mês relativo a produção da receita.\n\n\nExemplo:\n\n01\n02\n03\n...\n12',
   `quant_receitas` VARCHAR(45) NOT NULL COMMENT 'Contém a quantidade de receitas a serem produzidas pelos cozinheiros mensalmente\n\n\nExemplo:\n\nQuantidade\n\n05\n03',
-  `id_receita` BIGINT NOT NULL,
+  `id_receita` BIGINT NULL,
   `fk_cozinheiro` BIGINT NOT NULL,
   PRIMARY KEY (`id_metas`),
   CONSTRAINT `fk_Parametro_Receita1`
