@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Entity
@@ -22,13 +22,14 @@ public class Funcionario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idcargo;
+	private Long id_funcionario;
 	private String nome;
 	@Column(unique = true)
 	private String rg;
 	private Double salario;
-	private Date data_admi;
-	private Date data_egresso;
+	private LocalDate data_adm;
+	private LocalDate data_egresso;
+	private String nome_fantasia;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
@@ -49,12 +50,12 @@ public class Funcionario {
 	@JoinColumn(name = "meta_id")
 	private Meta metas;
 
-	public Long getId() {
-		return idcargo;
+	public Long getId_funcionario() {
+		return id_funcionario;
 	}
 
-	public void setId(Long id) {
-		this.idcargo = id;
+	public void setId_funcionario(Long id_funcionario) {
+		this.id_funcionario = id_funcionario;
 	}
 
 	public String getNome() {
@@ -81,20 +82,28 @@ public class Funcionario {
 		this.salario = salario;
 	}
 
+	public LocalDate getData_adm() {
+		return data_adm;
+	}
+
+	public void setData_adm(LocalDate data_adm) {
+		this.data_adm = data_adm;
+	}
+
+	public LocalDate getData_egresso() {
+		return data_egresso;
+	}
+
+	public void setData_egresso(LocalDate data_egresso) {
+		this.data_egresso = data_egresso;
+	}
+
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Long getIdcargo() {
-		return idcargo;
-	}
-
-	public void setIdcargo(Long idcargo) {
-		this.idcargo = idcargo;
 	}
 
 	public Cargo getCargo() {
@@ -105,28 +114,12 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
-	public Date getData_admi() {
-		return data_admi;
-	}
-
-	public void setData_admi(Date data_admi) {
-		this.data_admi = data_admi;
-	}
-
 	public List<Receitas> getReceitas() {
 		return receitas;
 	}
 
 	public void setReceitas(List<Receitas> receitas) {
 		this.receitas = receitas;
-	}
-
-	public Date getData_egresso() {
-		return data_egresso;
-	}
-
-	public void setData_egresso(Date data_egresso) {
-		this.data_egresso = data_egresso;
 	}
 
 	public Livros getLivros() {
@@ -136,6 +129,25 @@ public class Funcionario {
 	public void setLivros(Livros livros) {
 		this.livros = livros;
 	}
+
+	public Meta getMetas() {
+		return metas;
+	}
+
+	public void setMetas(Meta metas) {
+		this.metas = metas;
+	}
+
+	public String getNome_fantasia() {
+		return nome_fantasia;
+	}
+
+	public void setNome_fantasia(String nome_fantasia) {
+		this.nome_fantasia = nome_fantasia;
+	}
+
+	
+	
 	
 	
 }

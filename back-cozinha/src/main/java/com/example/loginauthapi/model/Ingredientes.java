@@ -15,19 +15,19 @@ public class Ingredientes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_ingrediente;
     private String nome;
     private String descricao;
 
     @ManyToMany(mappedBy = "ingredientes")
     private List<Receitas> receita;
 
-    public Long getId() {
-        return id;
+    public Long getId_ingrediente() {
+        return id_ingrediente;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_ingrediente(Long id_ingrediente) {
+        this.id_ingrediente = id_ingrediente;
     }
 
     public String getNome() {
@@ -53,5 +53,7 @@ public class Ingredientes {
     public void setReceita(List<Receitas> receita) {
         this.receita = receita;
     }
+
+    
     
 }

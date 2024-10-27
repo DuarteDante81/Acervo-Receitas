@@ -15,17 +15,17 @@ public class Cargo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long id_cargo;
 	private String descricao;
 	
 	@OneToMany(mappedBy = "cargo")
 	private List<Funcionario> funcionario;
 	
-	public long getId() {
-		return id;
+	public long getId_cargo() {
+		return id_cargo;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setId_cargo(long id_cargo) {
+		this.id_cargo = id_cargo;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -39,6 +39,7 @@ public class Cargo {
 	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
 	}
+	
 	
 	
 }

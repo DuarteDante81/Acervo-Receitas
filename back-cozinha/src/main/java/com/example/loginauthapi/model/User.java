@@ -24,7 +24,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idusuario;
+	private Long id_usuario;
 	private String nome;
 	@Column(unique = true)
 	private String email;
@@ -33,38 +33,50 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Funcionario> funcionario;
-	
-	
-	public Long getIdUsuario() {
-		return idusuario;
+
+	public Long getId_usuario() {
+		return id_usuario;
 	}
-	public void setIdUsuario(Long id) {
-		this.idusuario = id;
+
+	public void setId_usuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
 	}
-	public String getName() {
+
+	public String getNome() {
 		return nome;
 	}
-	public void setName(String name) {
-		this.nome = name;
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
+
+	public String getSenha() {
 		return senha;
 	}
-	public void setPassword(String password) {
-		this.senha = password;
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
+
 	public List<Funcionario> getFuncionario() {
 		return funcionario;
 	}
+
 	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
 	}
+	
+	
+	
+	
 	
 	
 	
