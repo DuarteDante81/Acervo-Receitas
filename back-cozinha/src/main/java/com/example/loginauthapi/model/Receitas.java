@@ -43,7 +43,11 @@ public class Receitas {
 
     @OneToMany(mappedBy = "id_receita")
     private List<Midia> midia;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "receita")
+    private Categoria categoria;
+    
     public Long getId_receita() {
         return id_receita;
     }

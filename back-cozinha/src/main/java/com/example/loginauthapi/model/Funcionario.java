@@ -1,6 +1,7 @@
 package com.example.loginauthapi.model;
 
 import java.util.List;
+import java.util.Date;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Column;
@@ -12,12 +13,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-import java.time.LocalDate;
+
 
 
 @Entity
 @Table(name = "funcionario")
+
 public class Funcionario {
 	
 	@Id
@@ -27,8 +31,10 @@ public class Funcionario {
 	@Column(unique = true)
 	private String rg;
 	private Double salario;
-	private LocalDate data_adm;
-	private LocalDate data_egresso;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data_adm;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data_egresso;
 	private String nome_fantasia;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -82,20 +88,28 @@ public class Funcionario {
 		this.salario = salario;
 	}
 
-	public LocalDate getData_adm() {
+	public Date getData_adm() {
 		return data_adm;
 	}
 
-	public void setData_adm(LocalDate data_adm) {
+	public void setData_ade (Date data_adm) {
 		this.data_adm = data_adm;
 	}
 
-	public LocalDate getData_egresso() {
+	public Date getData_egresso() {
 		return data_egresso;
 	}
 
-	public void setData_egresso(LocalDate data_egresso) {
+	public void setData_egresse (Date data_egresso) {
 		this.data_egresso = data_egresso;
+	}
+
+	public String getNome_fantasia() {
+		return nome_fantasia;
+	}
+
+	public void setNome_fantasia(String nome_fantasia) {
+		this.nome_fantasia = nome_fantasia;
 	}
 
 	public User getUser() {
@@ -138,13 +152,9 @@ public class Funcionario {
 		this.metas = metas;
 	}
 
-	public String getNome_fantasia() {
-		return nome_fantasia;
-	}
+	
 
-	public void setNome_fantasia(String nome_fantasia) {
-		this.nome_fantasia = nome_fantasia;
-	}
+	
 
 	
 	
