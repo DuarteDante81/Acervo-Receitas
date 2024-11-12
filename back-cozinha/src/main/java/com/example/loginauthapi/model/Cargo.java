@@ -21,24 +21,19 @@ public class Cargo {
 	@OneToMany(mappedBy = "cargo")
 	private List<Funcionario> funcionario;
 	
-	public long getId_cargo() {
+	public long getId() {
 		return id;
 	}
-	public void setId_cargo(long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public String getDescricao() {
+	public String getNome() {
 		return nome;
 	}
-	public void setDescricao(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public List<Funcionario> getFuncionario() {
-		return funcionario;
-	}
-	public void setFuncionario(List<Funcionario> funcionario) {
-		this.funcionario = funcionario;
-	}
+	
 	
 	
 	

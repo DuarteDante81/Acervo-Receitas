@@ -1,6 +1,6 @@
 package com.example.loginauthapi.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name= "receita")
@@ -22,7 +24,8 @@ public class Receitas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_receita;
     private String nome;
-    private LocalDate data_inclusao;
+    @Temporal(TemporalType.DATE)
+    private Date data_inclusao;
     private String descricao;
     private String modo_preparo;
     private Double num_porcao;
@@ -64,11 +67,11 @@ public class Receitas {
         this.nome = nome;
     }
 
-    public LocalDate getData_inclusao() {
+    public Date getData_inclusao() {
         return data_inclusao;
     }
 
-    public void setData_inclusao(LocalDate data_inclusao) {
+    public void setData_inclusao(Date data_inclusao) {
         this.data_inclusao = data_inclusao;
     }
 

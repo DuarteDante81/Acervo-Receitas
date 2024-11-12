@@ -29,10 +29,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/cargo").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/cargo/{id}").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/receitas/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/receitas/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/receitas/").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/receitas/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
