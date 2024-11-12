@@ -1,6 +1,6 @@
 package com.example.loginauthapi.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name= "receita")
@@ -20,16 +22,18 @@ public class Receitas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_receita;
     private String nome;
-    private LocalDate dataCriacao;
+    @Temporal(TemporalType.DATE)
+    private Date data_inclusao;
     private String descricao;
     private String modo_preparo;
-    private Double numero_porcao;
+    private Double num_porcao;
     private Double nota;
+    private String ind_inedita;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn(name = "id_funcionario")
     private Funcionario cozinheiro;
 
     @OneToMany(mappedBy = "receita")
@@ -40,12 +44,19 @@ public class Receitas {
     inverseJoinColumns = @JoinColumn(name = "ingredientes_id"))
     private List<Ingredientes> ingredientes;
 
-    public Long getId() {
-        return id;
+    @OneToMany(mappedBy = "id_receita")
+    private List<Midia> midia;
+    
+    @ManyToOne
+    @JoinColumn(name = "receita")
+    private Categoria categoria;
+    
+    public Long getId_receita() {
+        return id_receita;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_receita(Long id_receita) {
+        this.id_receita = id_receita;
     }
 
     public String getNome() {
@@ -54,6 +65,14 @@ public class Receitas {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Date getData_inclusao() {
+        return data_inclusao;
+    }
+
+    public void setData_inclusao(Date data_inclusao) {
+        this.data_inclusao = data_inclusao;
     }
 
     public String getDescricao() {
@@ -72,12 +91,12 @@ public class Receitas {
         this.modo_preparo = modo_preparo;
     }
 
-    public Double getNumero_porcao() {
-        return numero_porcao;
+    public Double getNum_porcao() {
+        return num_porcao;
     }
 
-    public void setNumero_porcao(Double numero_porcao) {
-        this.numero_porcao = numero_porcao;
+    public void setNum_porcao(Double num_porcao) {
+        this.num_porcao = num_porcao;
     }
 
     public Double getNota() {
@@ -88,12 +107,28 @@ public class Receitas {
         this.nota = nota;
     }
 
+    public String getInd_inedita() {
+        return ind_inedita;
+    }
+
+    public void setInd_inedita(String ind_inedita) {
+        this.ind_inedita = ind_inedita;
+    }
+
     public Funcionario getCozinheiro() {
         return cozinheiro;
     }
 
     public void setCozinheiro(Funcionario cozinheiro) {
         this.cozinheiro = cozinheiro;
+    }
+
+    public List<Avaliacao> getDegustador() {
+        return degustador;
+    }
+
+    public void setDegustador(List<Avaliacao> degustador) {
+        this.degustador = degustador;
     }
 
     public List<Ingredientes> getIngredientes() {
@@ -104,21 +139,17 @@ public class Receitas {
         this.ingredientes = ingredientes;
     }
 
-	public LocalDate getDataCriacao() {
-		return dataCriacao;
-	}
+    public List<Midia> getMidia() {
+        return midia;
+    }
 
-	public void setDataCriacao(LocalDate dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
+    public void setMidia(List<Midia> midia) {
+        this.midia = midia;
+    }
 
-	public List<Avaliacao> getDegustador() {
-		return degustador;
-	}
+    
 
-	public void setDegustador(List<Avaliacao> degustador) {
-		this.degustador = degustador;
-	}
+    
 	
     
 }

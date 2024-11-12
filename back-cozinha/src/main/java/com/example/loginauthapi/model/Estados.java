@@ -16,18 +16,18 @@ public class Estados {
 // oi 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_estado;
     private String descricao;
     
     @ManyToMany(mappedBy = "estados", fetch = FetchType.EAGER)
     private List<Restaurante> restaurante;
 
-    public Long getId() {
-        return id;
+    public Long getId_estado() {
+        return id_estado;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_estado(Long id_estado) {
+        this.id_estado = id_estado;
     }
 
     public String getDescricao() {
@@ -45,6 +45,8 @@ public class Estados {
     public void setRestaurante(List<Restaurante> restaurante) {
         this.restaurante = restaurante;
     }
+
+    
 
     
 }

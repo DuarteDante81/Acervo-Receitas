@@ -16,7 +16,7 @@ public class Livros {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_livro;
     private String titulo;
     @Column(unique = true)
     private String cod_isbn;
@@ -24,12 +24,12 @@ public class Livros {
     @OneToMany(mappedBy = "livros")
     private List<Funcionario> editor;
 
-    public Long getId() {
-        return id;
+    public Long getId_livro() {
+        return id_livro;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_livro(Long id_livro) {
+        this.id_livro = id_livro;
     }
 
     public String getTitulo() {
@@ -55,6 +55,8 @@ public class Livros {
     public void setEditor(List<Funcionario> editor) {
         this.editor = editor;
     }
+
+    
 
     
 }

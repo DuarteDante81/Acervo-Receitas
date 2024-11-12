@@ -17,8 +17,8 @@ public class Avaliacao {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private LocalDate dataAvalia;
+    private Long id_degustacao;
+    private LocalDate data_degustacao;
 
     @Column(nullable = false)
     private Double nota;
@@ -27,27 +27,27 @@ public class Avaliacao {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn(name = "funcionario")
     private Funcionario degustador;
 
     @ManyToOne
-    @JoinColumn(name = "receita_id")
+    @JoinColumn(name = "receita")
     private Receitas receita;
 
-	public Long getId() {
-		return id;
+	public Long getId_degustacao() {
+		return id_degustacao;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId_degustacao(Long id_degustacao) {
+		this.id_degustacao = id_degustacao;
 	}
 
-	public LocalDate getDataAvalia() {
-		return dataAvalia;
+	public LocalDate getData_degustacao() {
+		return data_degustacao;
 	}
 
-	public void setDataAvalia(LocalDate dataAvalia) {
-		this.dataAvalia = dataAvalia;
+	public void setData_degustacao(LocalDate data_degustacao) {
+		this.data_degustacao = data_degustacao;
 	}
 
 	public Double getNota() {
@@ -66,6 +66,13 @@ public class Avaliacao {
 		this.descricao = descricao;
 	}
 
+	public Funcionario getDegustador() {
+		return degustador;
+	}
+
+	public void setDegustador(Funcionario degustador) {
+		this.degustador = degustador;
+	}
 
 	public Receitas getReceita() {
 		return receita;
@@ -75,13 +82,7 @@ public class Avaliacao {
 		this.receita = receita;
 	}
 
-	public Funcionario getDegustador() {
-		return degustador;
-	}
-
-	public void setDegustador(Funcionario degustador) {
-		this.degustador = degustador;
-	}
+	
 	
     
 }
