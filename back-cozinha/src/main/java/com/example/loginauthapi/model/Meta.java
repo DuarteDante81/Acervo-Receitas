@@ -15,29 +15,30 @@ public class Meta {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Double quantMin;
-    private Double quantidade;
+    private Long id_metas;
+    private Double mes_prod;
+    private Double anos_prod;
+    private Double quant_receitas;
     @OneToMany(mappedBy = "metas")
     private List<Funcionario> cozinheiro;
     
-    public Long getId() {
-        return id;
+    public Long getId_metas() {
+        return id_metas;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_metas(Long id_metas) {
+        this.id_metas = id_metas;
     }
-    public Double getQuantMin() {
-        return quantMin;
+    public Double getMes_prod() {
+        return mes_prod;
     }
-    public void setQuantMin(Double quantMin) {
-        this.quantMin = quantMin;
+    public void setMes_prod(Double mes_prod) {
+        this.mes_prod = mes_prod;
     }
-    public Double getQuantidade() {
-        return quantidade;
+    public Double getQuant_receitas() {
+        return quant_receitas;
     }
-    public void setQuantidade(Double quantidade) {
-        this.quantidade = quantidade;
+    public void setQuant_receitas(Double quant_receitas) {
+        this.quant_receitas = quant_receitas;
     }
     public List<Funcionario> getCozinheiro() {
         return cozinheiro;
@@ -45,6 +46,14 @@ public class Meta {
     public void setCozinheiro(List<Funcionario> cozinheiro) {
         this.cozinheiro = cozinheiro;
     }
+    public Double getAnos_prod() {
+        return anos_prod;
+    }
+    public void setAnos_prod(Double anos_prod) {
+        this.anos_prod = anos_prod;
+    }
+    
+    
 
     
 }

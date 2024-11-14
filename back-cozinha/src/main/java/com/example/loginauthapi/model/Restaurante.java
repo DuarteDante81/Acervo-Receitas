@@ -17,7 +17,7 @@ public class Restaurante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_restaurante;
     private String nome;
     
     @ManyToMany
@@ -25,12 +25,12 @@ public class Restaurante {
     inverseJoinColumns = @JoinColumn(name = "estados"))
     private List<Estados> estados;
 
-    public Long getId() {
-        return id;
+    public Long getId_restaurante() {
+        return id_restaurante;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_restaurante(Long id_restaurante) {
+        this.id_restaurante = id_restaurante;
     }
 
     public String getNome() {
@@ -47,7 +47,9 @@ public class Restaurante {
 
     public void setEstados(List<Estados> estados) {
         this.estados = estados;
-    } 
+    }
+
+    
 
     
 }

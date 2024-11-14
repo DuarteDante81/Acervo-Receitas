@@ -34,7 +34,6 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Funcionario> funcionario;
 
-
 	public Long getId_usuario() {
 		return id_usuario;
 	}
@@ -74,4 +73,12 @@ public class User {
 	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
