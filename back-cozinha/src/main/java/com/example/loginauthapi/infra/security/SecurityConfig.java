@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/cargo").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cargo/").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/cargo/{id}").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/receitas/").permitAll()
