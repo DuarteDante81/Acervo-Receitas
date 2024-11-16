@@ -3,20 +3,8 @@ package com.example.loginauthapi.model;
 import java.util.List;
 import java.util.Date;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 
 @Entity
@@ -37,8 +25,9 @@ public class Funcionario {
 	private Date data_egresso;
 	private String nome_fantasia;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
+	@JsonManagedReference
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

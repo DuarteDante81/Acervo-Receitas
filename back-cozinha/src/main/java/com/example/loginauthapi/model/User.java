@@ -4,14 +4,8 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -31,8 +25,9 @@ public class User {
 	@Column(unique = true)
 	private String senha;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Funcionario> funcionario;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Funcionario funcionario;
 
 	public Long getId_usuario() {
 		return id_usuario;
@@ -66,11 +61,11 @@ public class User {
 		this.senha = senha;
 	}
 
-	public List<Funcionario> getFuncionario() {
+	public Funcionario getFuncionario() {
 		return funcionario;
 	}
 
-	public void setFuncionario(List<Funcionario> funcionario) {
+	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 	
