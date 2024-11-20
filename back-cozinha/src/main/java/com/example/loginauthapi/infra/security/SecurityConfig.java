@@ -32,7 +32,7 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.POST, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/funcionario/").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/funcionario/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/funcionario/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/cargo").permitAll()

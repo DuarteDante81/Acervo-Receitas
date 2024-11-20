@@ -11,4 +11,6 @@ import com.example.loginauthapi.model.Funcionario;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 
     Optional<Funcionario> findByNome(String nome);
+    boolean existsByRg(String rg);
+    boolean existsByNome(String nome);
 }

@@ -53,9 +53,10 @@ public class FuncionarioController {
         return funcionarioRepository.save(funcionario);
     }
 
-    @PutMapping("/")
-    public Funcionario update(@RequestBody @Valid Funcionario funcionario){
-        return funcionarioService.update(funcionario);
+    @PutMapping("/{id}")
+    public Funcionario update(@PathVariable("id") Long id, @RequestBody @Valid RegisterRequestDTO body) {
+        // Chama o serviço para atualizar os dados com base no id
+        return funcionarioService.update(id, body);
     }
 
     @DeleteMapping("/{id}")

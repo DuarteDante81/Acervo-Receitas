@@ -3,6 +3,9 @@ package com.example.loginauthapi.Services;
 import java.util.Date;
 import java.util.List;
 
+import com.example.loginauthapi.dto.RegisterRequestDTO;
+import com.example.loginauthapi.model.Cargo;
+import com.example.loginauthapi.repositories.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,9 @@ import com.example.loginauthapi.repositories.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
+
+    @Autowired
+    private CargoRepository cargoRepository;
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -27,10 +33,22 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
-    
-    public Funcionario update(Funcionario funcionario){
-        funcionario.setData_ade(new Date());
-        return funcionarioRepository.saveAndFlush(funcionario);  
+
+    public Funcionario update(Long id, RegisterRequestDTO body) {
+
+        Cargo cargo = findByNome(body.nome_cargo());
+
+        Funcionario existingFuncionario = verificaFuncionario(id);
+
+        if (funcionarioRepository.existsByRg(body.rg()) && !existingFuncionario.getRg().equals(body.rg())) {
+            throw new RuntimeException("Já existe um funcionário com o RG fornecido.");
+        }
+
+        existingFuncionario.setNome(body.nome());
+        existingFuncionario.setRg(body.rg());
+        existingFuncionario.setSalario(body.salario());
+        existingFuncionario.setCargo(cargo);
+        return funcionarioRepository.saveAndFlush(existingFuncionario);
     }
 
     public void delete(Long id){
@@ -51,6 +69,8 @@ public class FuncionarioService {
     public Funcionario verificaFuncionario(Long id){
         return funcionarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Funcionario não encontrado"));
     }
-    
-   
+
+    private Cargo findByNome(String nome){
+        return cargoRepository.findByNome(nome).orElseThrow(()-> new RuntimeException("nome do cargo não encontrado"));
+    }
 }
