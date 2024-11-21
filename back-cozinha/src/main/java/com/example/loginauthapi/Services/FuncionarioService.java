@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.example.loginauthapi.dto.RegisterRequestDTO;
 import com.example.loginauthapi.model.Cargo;
+import com.example.loginauthapi.model.User;
 import com.example.loginauthapi.repositories.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import com.example.loginauthapi.model.Funcionario;

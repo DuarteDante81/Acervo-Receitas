@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,24 +39,38 @@ public class AuthController {
     private TokenService tokenService;
     @Autowired
     private CargoRepository cargoRepository;
-    
-
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginRequestDTO body) {
-        User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        // Recupera o usuário pelo e-mail
+        User user = this.repository.findByEmail(body.email())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Recupera o funcionário associado ao usuário
+        Funcionario funcionario = funcionarioRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para este usuário"));
+
+        // Obtém o cargo do funcionário
+        Cargo cargo = funcionario.getCargo();
+
+        // Valida a senha
         if (passwordEncoder.matches(body.senha(), user.getSenha())) {
+            // Gera o token
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getNome(), token));
+
+            // Retorna a resposta com o nome do usuário, cargo e token
+            return ResponseEntity.ok(new ResponseDTO(user.getNome(), cargo.getNome(), token));
         }
+
         return ResponseEntity.badRequest().build();
     }
 
 
+
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body) {
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body,Funcionario funcionario) {
         Optional<User> user = this.repository.findByEmail(body.email());
         
         if (user.isEmpty()) {
@@ -67,7 +82,7 @@ public class AuthController {
             
             Cargo cargo = findByNome(body.nome_cargo());
     
-            Funcionario funcionario = new Funcionario();
+
             funcionario.setRg(body.rg());
             funcionario.setSalario(body.salario());
             funcionario.setUser(newUser);
@@ -76,7 +91,7 @@ public class AuthController {
             funcionario.setData_ade(new Date());
             funcionarioRepository.save(funcionario);
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), token));
+            return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), cargo.getNome(), token));
         
         }
         
@@ -86,6 +101,8 @@ public class AuthController {
     private Cargo findByNome(String nome){
         return cargoRepository.findByNome(nome).orElseThrow(()-> new RuntimeException("nome do cargo não encontrado"));
     }
-
+    private Funcionario verificaFuncionario(Long id){
+        return funcionarioRepository.findById(id).orElseThrow(()-> new RuntimeException("Funcionario não encontrado"));
+    }
     
 }
