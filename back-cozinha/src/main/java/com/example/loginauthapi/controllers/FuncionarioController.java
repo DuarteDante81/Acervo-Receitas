@@ -1,11 +1,9 @@
 package com.example.loginauthapi.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import com.example.loginauthapi.dto.RegisterRequestDTO;
-import com.example.loginauthapi.model.Cargo;
-import com.example.loginauthapi.repositories.CargoRepository;
+
 import com.example.loginauthapi.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +30,7 @@ public class FuncionarioController {
     private FuncionarioService funcionarioService;
     @Autowired
     private FuncionarioRepository funcionarioRepository;
-    @Autowired
-    private CargoRepository cargoRepository;
+    
 
     @GetMapping("/")
     public List<Funcionario> List(){
@@ -41,21 +38,15 @@ public class FuncionarioController {
     }
 
     @PostMapping("/")
-    public Funcionario create(@RequestBody @Valid RegisterRequestDTO body){
-        Cargo cargo = findByNome(body.nome_cargo());
-
-        Funcionario funcionario = new Funcionario();
-        funcionario.setRg(body.rg());
-        funcionario.setSalario(body.salario());
-        funcionario.setCargo(cargo);
-        funcionario.setNome(body.nome());
-        funcionario.setData_ade(new Date());
-        return funcionarioRepository.save(funcionario);
+    public Funcionario create(@RequestBody @Valid RegisterRequestDTO body,Funcionario funcionario){
+        Funcionario result = funcionarioService.create(funcionario,body);
+        return funcionarioRepository.save(result);
     }
 
-    @PutMapping("/")
-    public Funcionario update(@RequestBody @Valid Funcionario funcionario){
-        return funcionarioService.update(funcionario);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody @Valid RegisterRequestDTO body,@PathVariable("id") Long id){
+     funcionarioService.update(id,body);
+     return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +55,5 @@ public class FuncionarioController {
         return ResponseEntity.ok().build();
     }
 
-    private Cargo findByNome(String nome){
-        return cargoRepository.findByNome(nome).orElseThrow(()-> new RuntimeException("nome do cargo não encontrado"));
-    }
+    
 }

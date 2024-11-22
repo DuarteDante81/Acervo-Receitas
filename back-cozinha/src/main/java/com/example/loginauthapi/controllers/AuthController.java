@@ -30,32 +30,33 @@ public class AuthController {
 
     @Autowired
     private UserRepository repository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private TokenService tokenService;
     @Autowired
     private CargoRepository cargoRepository;
-    
-
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginRequestDTO body) {
-        User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = this.repository.findByEmail(body.email())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Funcionario funcionario = funcionarioRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para este usuário"));
+        Cargo cargo = funcionario.getCargo();
         if (passwordEncoder.matches(body.senha(), user.getSenha())) {
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getNome(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getNome(), cargo.getNome(), token));
         }
         return ResponseEntity.badRequest().build();
     }
 
 
+
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body) {
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body,Funcionario funcionario) {
         Optional<User> user = this.repository.findByEmail(body.email());
         
         if (user.isEmpty()) {
@@ -67,7 +68,7 @@ public class AuthController {
             
             Cargo cargo = findByNome(body.nome_cargo());
     
-            Funcionario funcionario = new Funcionario();
+
             funcionario.setRg(body.rg());
             funcionario.setSalario(body.salario());
             funcionario.setUser(newUser);
@@ -76,7 +77,7 @@ public class AuthController {
             funcionario.setData_ade(new Date());
             funcionarioRepository.save(funcionario);
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getNome(), token));
+            return ResponseEntity.ok().build();
         
         }
         

@@ -8,5 +8,6 @@ import com.example.loginauthapi.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findByEmail(String email);
+	User findByemail(String email);
 	
 }
