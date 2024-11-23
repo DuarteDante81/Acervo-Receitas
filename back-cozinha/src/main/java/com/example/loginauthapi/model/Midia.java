@@ -24,8 +24,8 @@ public class Midia {
     private byte[] midia;
 
     @ManyToOne
-    @JoinColumn(name = "id_receita")
-    private Receitas id_receita;
+    @JoinColumn(name = "receita_id")
+    private Receitas receita;
 
     public Long getId_midia() {
         return id_midia;
@@ -59,12 +59,12 @@ public class Midia {
         this.midia = midia;
     }
 
-    public Receitas getId_receita() {
-        return id_receita;
+    public Receitas getreceita() {
+        return receita;
     }
 
-    public void setId_receita(Receitas id_receita) {
-        this.id_receita = id_receita;
+    public void setId_receita(Receitas receita) {
+        this.receita = receita;
     }
 
     

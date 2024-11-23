@@ -2,6 +2,7 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Estados {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_estado;
+    @Column(nullable = false)
     private String descricao;
     
     @ManyToMany(mappedBy = "estados", fetch = FetchType.EAGER)

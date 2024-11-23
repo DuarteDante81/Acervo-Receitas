@@ -27,11 +27,11 @@ public class Avaliacao {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario")
+	@JoinColumn(name = "funcionario_id")
     private Funcionario degustador;
 
     @ManyToOne
-    @JoinColumn(name = "receita")
+    @JoinColumn(name = "receita_id")
     private Receitas receita;
 
 	public Long getId_degustacao() {

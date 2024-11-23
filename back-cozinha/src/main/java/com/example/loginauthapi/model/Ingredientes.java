@@ -1,12 +1,13 @@
 package com.example.loginauthapi.model;
 
-import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +17,14 @@ public class Ingredientes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_ingrediente;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String descricao;
 
-    @ManyToMany(mappedBy = "ingredientes")
-    private List<Receitas> receita;
+    @ManyToOne
+    @JoinColumn(name = "receita_id")
+    private Receitas receita;
 
     public Long getId_ingrediente() {
         return id_ingrediente;
@@ -46,11 +50,11 @@ public class Ingredientes {
         this.descricao = descricao;
     }
 
-    public List<Receitas> getReceita() {
+    public Receitas getReceita() {
         return receita;
     }
 
-    public void setReceita(List<Receitas> receita) {
+    public void setReceita(Receitas receita) {
         this.receita = receita;
     }
 

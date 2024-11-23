@@ -18,10 +18,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_usuario;
+	@Column(nullable = false)
 	private String nome;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String senha;
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

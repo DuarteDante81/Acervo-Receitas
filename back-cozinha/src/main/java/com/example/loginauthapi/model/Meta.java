@@ -2,6 +2,7 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,9 @@ public class Meta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_metas;
+    @Column(nullable = false)
     private Double mes_prod;
+    @Column(nullable = false)
     private Double anos_prod;
     private Double quant_receitas;
     @OneToMany(mappedBy = "metas")
