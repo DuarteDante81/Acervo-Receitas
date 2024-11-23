@@ -1,10 +1,12 @@
 package com.example.loginauthapi.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,6 +46,11 @@ public class ReceitaController {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository; 
+
+    @GetMapping("/")
+    public List<Receitas> List(){
+        return receitaService.List();
+    }
 
     @PostMapping("/")
     public ResponseEntity create(@RequestBody @Valid ReceitasRequestDTO body, @RequestHeader("Authorization") String token) {
