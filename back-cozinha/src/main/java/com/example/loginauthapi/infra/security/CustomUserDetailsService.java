@@ -2,6 +2,7 @@ package com.example.loginauthapi.infra.security;
 
 import java.util.ArrayList;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,5 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), 
 				user.getSenha(), new ArrayList<>());
 	}
+
+	public User getUsuarioLogado() {
+    // Recupera o usuário autenticado
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    // Aqui assumimos que o nome de usuário é o mesmo que o ID do usuário
+    return repository.findById(user.getId_usuario()).orElseThrow(()-> new RuntimeException("Usuario não encontrado!!"));
+}
 
 }
