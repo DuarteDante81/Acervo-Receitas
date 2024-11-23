@@ -37,11 +37,10 @@ public class Funcionario {
 	@OneToMany(mappedBy = "cozinheiro")
 	private List<Receitas> receitas;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "livro_id")
-	private Livros livros;
+	@OneToMany(mappedBy = "editor")
+    private List<Livros> livros;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "meta_id")
 	private Meta metas;
 
@@ -125,27 +124,15 @@ public class Funcionario {
 		this.receitas = receitas;
 	}
 
-	public Livros getLivros() {
+	public List<Livros> getLivros() {
 		return livros;
 	}
 
-	public void setLivros(Livros livros) {
+	public void setLivros(List<Livros> livros) {
 		this.livros = livros;
 	}
 
-	public Meta getMetas() {
-		return metas;
-	}
 
-	public void setMetas(Meta metas) {
-		this.metas = metas;
-	}
-
-	
-
-	
-
-	
 	
 	
 	

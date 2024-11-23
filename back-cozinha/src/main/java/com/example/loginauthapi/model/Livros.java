@@ -1,13 +1,14 @@
 package com.example.loginauthapi.model;
 
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,12 +18,15 @@ public class Livros {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_livro;
+    @Column(nullable = false)
     private String titulo;
     @Column(unique = true)
     private String cod_isbn;
 
-    @OneToMany(mappedBy = "livros")
-    private List<Funcionario> editor;
+    @ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "funcionario_id")
+    private Funcionario editor;
+
 
     public Long getId_livro() {
         return id_livro;
@@ -48,15 +52,13 @@ public class Livros {
         this.cod_isbn = cod_isbn;
     }
 
-    public List<Funcionario> getEditor() {
+    public Funcionario getEditor() {
         return editor;
     }
 
-    public void setEditor(List<Funcionario> editor) {
+    public void setEditor(Funcionario editor) {
         this.editor = editor;
-    }
-
-    
+    } 
 
     
 }

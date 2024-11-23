@@ -49,6 +49,12 @@ public class FuncionarioController {
      return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/softDelete/{id}")
+    public ResponseEntity<Void> softDelete(@PathVariable("id") Long id){
+     funcionarioService.egresso(id);
+     return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         funcionarioService.delete(id);

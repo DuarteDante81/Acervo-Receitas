@@ -1,7 +1,6 @@
 package com.example.loginauthapi.controllers;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import com.example.loginauthapi.Services.ReceitaService;
 import com.example.loginauthapi.Services.UserServices;
 import com.example.loginauthapi.dto.ReceitasRequestDTO;
 import com.example.loginauthapi.model.Receitas;
+import com.example.loginauthapi.model.Categoria;
 import com.example.loginauthapi.model.Funcionario;
 import com.example.loginauthapi.model.User;
 import com.example.loginauthapi.repositories.FuncionarioRepository;
@@ -63,6 +63,8 @@ public class ReceitaController {
             return ResponseEntity.status(404).body("Funcionário não encontrado");
         }
 
+        Categoria categoria = receitaService.findByNome(body.nome_categoria());
+
         Receitas receitas = new Receitas();
         receitas.setNome(body.nome());
         receitas.setData_inclusao(new Date());
@@ -71,6 +73,7 @@ public class ReceitaController {
         receitas.setNum_porcao(body.num_porcao());
         receitas.setInd_inedita(body.ind_inedita());
         receitas.setCozinheiro(funcionario); 
+        receitas.setCategoria(categoria);
         receitasRepository.save(receitas);
 
         return ResponseEntity.ok().build();

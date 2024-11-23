@@ -76,7 +76,6 @@ public class AuthController {
             funcionario.setNome(body.nome());
             funcionario.setData_ade(new Date());
             funcionarioRepository.save(funcionario);
-            String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok().build();
         
         }

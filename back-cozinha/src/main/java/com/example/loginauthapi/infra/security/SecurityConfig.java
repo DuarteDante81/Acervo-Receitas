@@ -33,11 +33,16 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/funcionario/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/funcionario/softDelete/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/funcionario/{id}").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/cargo").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cargo/").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/cargo/{id}").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/categoria/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/categoria/").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/categoria/{id}").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/receitas/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/receitas/").permitAll()

@@ -3,13 +3,12 @@ package com.example.loginauthapi.model;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -23,34 +22,45 @@ public class Receitas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_receita;
+
+    @Column(nullable = false)  
     private String nome;
+
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false) 
     private Date data_inclusao;
+
+    @Column(nullable = false)  
     private String descricao;
+
+    @Column(nullable = false)  
     private String modo_preparo;
+
+    @Column(nullable = false)
     private Double num_porcao;
-    private Double nota;
-    private String ind_inedita;
+
+    @Column(nullable = false) 
+    private boolean ind_inedita;
 
     @ManyToOne
-    @JoinColumn(name = "id_funcionario")
+    @JoinColumn(name = "funcionario_id",nullable = false)
     private Funcionario cozinheiro;
 
     @OneToMany(mappedBy = "receita")
-    private List<Avaliacao> degustador;
+    private List<Avaliacao> degustacao;
 
-    @ManyToMany
-    @JoinTable(name = "receitas_ingredientes", joinColumns = @JoinColumn(name = "receitas_id"),
-    inverseJoinColumns = @JoinColumn(name = "ingredientes_id"))
+    @OneToMany(mappedBy = "receita")
     private List<Ingredientes> ingredientes;
 
-    @OneToMany(mappedBy = "id_receita")
+    @OneToMany(mappedBy = "receita")
     private List<Midia> midia;
-    
+
     @ManyToOne
-    @JoinColumn(name = "receita")
+    @JoinColumn(name = "categoria_id") 
     private Categoria categoria;
-    
+
+    // Getters e Setters
+
     public Long getId_receita() {
         return id_receita;
     }
@@ -99,19 +109,11 @@ public class Receitas {
         this.num_porcao = num_porcao;
     }
 
-    public Double getNota() {
-        return nota;
-    }
-
-    public void setNota(Double nota) {
-        this.nota = nota;
-    }
-
-    public String getInd_inedita() {
+    public boolean getInd_inedita() {
         return ind_inedita;
     }
 
-    public void setInd_inedita(String ind_inedita) {
+    public void setInd_inedita(boolean ind_inedita) {
         this.ind_inedita = ind_inedita;
     }
 
@@ -123,12 +125,12 @@ public class Receitas {
         this.cozinheiro = cozinheiro;
     }
 
-    public List<Avaliacao> getDegustador() {
-        return degustador;
+    public List<Avaliacao> getDegustacao() {
+        return degustacao;
     }
 
-    public void setDegustador(List<Avaliacao> degustador) {
-        this.degustador = degustador;
+    public void setDegustacao(List<Avaliacao> degustacao) {
+        this.degustacao = degustacao;
     }
 
     public List<Ingredientes> getIngredientes() {
@@ -147,9 +149,12 @@ public class Receitas {
         this.midia = midia;
     }
 
-    
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
-    
-	
-    
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
 }
