@@ -3,6 +3,8 @@ package com.example.loginauthapi.model;
 import java.util.List;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -35,6 +37,7 @@ public class Funcionario {
 	private Cargo cargo;
 
 	@OneToMany(mappedBy = "cozinheiro")
+	@JsonBackReference
 	private List<Receitas> receitas;
 
 	@OneToMany(mappedBy = "editor")
