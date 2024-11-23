@@ -55,9 +55,9 @@ class FuncionarioServiceTest {
     void testCriarFuncionarioComCamposObrigatorios() {
         // Criar o payload do funcionário
         Map<String, Object> funcionarioPayload = new HashMap<>();
-        funcionarioPayload.put("nome", "Joazin");
-        funcionarioPayload.put("rg", "1");
-        funcionarioPayload.put("nome_cargo", "analista");
+        funcionarioPayload.put("nome", "Joazin22");
+        funcionarioPayload.put("rg", "1219381931389");
+        funcionarioPayload.put("nome_cargo", "degustador");
         funcionarioPayload.put("salario", 5000.00);
 
         // Enviar a requisição POST para o endpoint /funcionario
@@ -67,7 +67,7 @@ class FuncionarioServiceTest {
                 Funcionario.class
         );
 
-        // Verificar se a resposta foi bem-sucedida (status 201 Created)
+        // Verificar se a resposta foi bem-sucedida (status 200)
         assertEquals(HttpStatus.OK, response.getStatusCode(), "A resposta deve retornar 200");
 
         // Verificar se o funcionário foi criado corretamente
