@@ -3,6 +3,8 @@ package com.example.loginauthapi.model;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +47,7 @@ public class Receitas {
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id",nullable = false)
+    @JsonManagedReference
     private Funcionario cozinheiro;
 
     @OneToMany(mappedBy = "receita")
