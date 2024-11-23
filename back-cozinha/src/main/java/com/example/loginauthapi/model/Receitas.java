@@ -23,6 +23,7 @@ public class Receitas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_receita;
 
+    //colocar como unique depois
     @Column(nullable = false)  
     private String nome;
 
