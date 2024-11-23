@@ -3,11 +3,13 @@ package com.example.loginauthapi.Services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.loginauthapi.dto.FuncionarioResponseDTO;
 import com.example.loginauthapi.dto.RegisterRequestDTO;
 import com.example.loginauthapi.model.Cargo;
 import com.example.loginauthapi.model.Funcionario;
@@ -33,8 +35,22 @@ public class FuncionarioService {
         return criacaoFuncionario(funcionario,body);
     }
 
-    public List<Funcionario> list(){
-        return funcionarioRepository.findAll();
+    public List<FuncionarioResponseDTO> list() {
+        List<Funcionario> funcionarios = funcionarioRepository.findAll();
+
+        // Mapeia a lista de funcionários para a lista de DTOs
+        return funcionarios.stream()
+                .map(funcionario -> new FuncionarioResponseDTO(
+                        funcionario.getId_funcionario(),
+                        funcionario.getNome(),
+                        funcionario.getRg(),
+                        funcionario.getSalario(),
+                        funcionario.getData_adm(),
+                        funcionario.getData_egresso(),
+                        funcionario.getNome_fantasia(),
+                        funcionario.getCargo() != null ? funcionario.getCargo().getNome() : null // Pegando o nome do cargo
+                ))
+                .collect(Collectors.toList());
     }
 
     private Funcionario criacaoFuncionario(Funcionario funcionario, RegisterRequestDTO body){

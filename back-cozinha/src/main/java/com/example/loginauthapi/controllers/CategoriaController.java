@@ -23,6 +23,7 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
+    
     @GetMapping("/")
     public List<Categoria> List(){
         return categoriaService.List();

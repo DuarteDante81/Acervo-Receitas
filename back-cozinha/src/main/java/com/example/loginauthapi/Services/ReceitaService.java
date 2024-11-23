@@ -1,10 +1,13 @@
 package com.example.loginauthapi.Services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.loginauthapi.dto.IngredientesResponseDTO;
+import com.example.loginauthapi.dto.ReceitasResponseDTO;
 import com.example.loginauthapi.model.Categoria;
 import com.example.loginauthapi.model.Receitas;
 import com.example.loginauthapi.repositories.CategoriaRepository;
@@ -23,8 +26,35 @@ public class ReceitaService {
         return result;
     }
 
-    public List<Receitas> List(){
-        return receitasRepository.findAll();
+   public List<ReceitasResponseDTO> List() {
+        List<Receitas> receitas = receitasRepository.findAll();
+
+        return receitas.stream()
+                .map(receita -> {
+                    // Mapeia a lista de ingredientes
+                    List<IngredientesResponseDTO> ingredientesDTO = receita.getIngredientes().stream()
+                            .map(ingrediente -> new IngredientesResponseDTO(
+                                    ingrediente.getId_ingrediente(),
+                                    ingrediente.getNome()
+                            ))
+                            .collect(Collectors.toList());
+
+                    String nomeCategoria = receita.getCategoria() != null ? receita.getCategoria().getDescricao() : null;
+
+                    // Mapeia para o DTO de receitas
+                    return new ReceitasResponseDTO(
+                        receita.getId_receita(),
+                        receita.getNome(),
+                        receita.getData_inclusao(),
+                        receita.getDescricao(),
+                        receita.getModo_preparo(),
+                        receita.getNum_porcao(),
+                        receita.getInd_inedita(),
+                        ingredientesDTO,  // Passa a lista de ingredientes mapeada
+                        nomeCategoria
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     public Receitas update(Receitas receitas){

@@ -67,7 +67,6 @@ public class AuthController {
             this.repository.save(newUser);
             
             Cargo cargo = findByNome(body.nome_cargo());
-    
 
             funcionario.setRg(body.rg());
             funcionario.setSalario(body.salario());
@@ -76,10 +75,9 @@ public class AuthController {
             funcionario.setNome(body.nome());
             funcionario.setData_ade(new Date());
             funcionarioRepository.save(funcionario);
+            
             return ResponseEntity.ok().build();
-        
         }
-        
         return ResponseEntity.badRequest().build();
     }
 
