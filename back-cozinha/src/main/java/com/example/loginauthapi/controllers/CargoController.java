@@ -23,7 +23,7 @@ public class CargoController {
         return cargoService.List();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Cargo create(@RequestBody @Valid Cargo cargo){
         return cargoService.create(cargo);
     }

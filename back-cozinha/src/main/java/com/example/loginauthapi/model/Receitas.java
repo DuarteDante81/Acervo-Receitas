@@ -3,8 +3,7 @@ package com.example.loginauthapi.model;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,15 +44,17 @@ public class Receitas {
     @Column(nullable = false) 
     private boolean ind_inedita;
 
+    @Column(nullable = true)
+    private Double mediaNota;
+
     @ManyToOne
     @JoinColumn(name = "funcionario_id",nullable = false)
-    @JsonManagedReference
     private Funcionario cozinheiro;
 
-    @OneToMany(mappedBy = "receita")
+    @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
     private List<Avaliacao> degustacao;
 
-    @OneToMany(mappedBy = "receita")
+    @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
     private List<Ingredientes> ingredientes;
 
     @OneToMany(mappedBy = "receita")
@@ -161,4 +162,13 @@ public class Receitas {
         this.categoria = categoria;
     }
 
+    public Double getMediaNota() {
+        return mediaNota;
+    }
+
+    public void setMediaNota(Double mediaNota) {
+        this.mediaNota = mediaNota;
+    }
+
+    
 }

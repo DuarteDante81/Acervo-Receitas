@@ -1,6 +1,8 @@
 package com.example.loginauthapi.model;
 
-import java.time.LocalDate;
+
+import java.util.Date;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "degustacao")
@@ -18,12 +22,14 @@ public class Avaliacao {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_degustacao;
-    private LocalDate data_degustacao;
+
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date data_degustacao;
 
     @Column(nullable = false)
     private Double nota;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String descricao;
 
     @ManyToOne
@@ -42,11 +48,11 @@ public class Avaliacao {
 		this.id_degustacao = id_degustacao;
 	}
 
-	public LocalDate getData_degustacao() {
+	public Date getData_degustacao() {
 		return data_degustacao;
 	}
 
-	public void setData_degustacao(LocalDate data_degustacao) {
+	public void setData_degustacao(Date data_degustacao) {
 		this.data_degustacao = data_degustacao;
 	}
 

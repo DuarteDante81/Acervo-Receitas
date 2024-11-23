@@ -3,6 +3,7 @@ package com.example.loginauthapi.controllers;
 import java.util.Date;
 import java.util.List;
 
+import com.example.loginauthapi.dto.FuncionarioResponseDTO;
 import com.example.loginauthapi.dto.RegisterRequestDTO;
 import com.example.loginauthapi.model.Cargo;
 import com.example.loginauthapi.repositories.CargoRepository;
@@ -36,8 +37,8 @@ public class FuncionarioController {
     private CargoRepository cargoRepository;
 
     @GetMapping("/")
-    public List<Funcionario> List(){
-        return funcionarioService.list();
+    public List<FuncionarioResponseDTO> list() {
+        return funcionarioService.list(); 
     }
 
     @PostMapping("/")

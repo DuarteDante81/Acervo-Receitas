@@ -17,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.loginauthapi.Services.ReceitaService;
 import com.example.loginauthapi.Services.UserServices;
+import com.example.loginauthapi.dto.IngredienteDTO;
 import com.example.loginauthapi.dto.ReceitasRequestDTO;
+import com.example.loginauthapi.dto.ReceitasResponseDTO;
 import com.example.loginauthapi.model.Receitas;
 import com.example.loginauthapi.model.Categoria;
 import com.example.loginauthapi.model.Funcionario;
+import com.example.loginauthapi.model.Ingredientes;
 import com.example.loginauthapi.model.User;
 import com.example.loginauthapi.repositories.FuncionarioRepository;
+import com.example.loginauthapi.repositories.IngredientesRepository;
 import com.example.loginauthapi.repositories.ReceitasRepository;
 import com.example.loginauthapi.infra.security.TokenService;
 
@@ -45,11 +49,15 @@ public class ReceitaController {
     private UserServices userService; 
 
     @Autowired
+    private IngredientesRepository ingredientesRepository;
+    @Autowired
     private FuncionarioRepository funcionarioRepository; 
 
+    
     @GetMapping("/")
-    public List<Receitas> List(){
-        return receitaService.List();
+    public ResponseEntity<List<ReceitasResponseDTO>> listAllReceitas() {
+        List<ReceitasResponseDTO> receitas = receitaService.List();
+        return ResponseEntity.ok(receitas);
     }
 
     @PostMapping("/")
@@ -78,11 +86,22 @@ public class ReceitaController {
         receitas.setDescricao(body.descricao());
         receitas.setModo_preparo(body.modo_preparo());
         receitas.setNum_porcao(body.num_porcao());
-        receitas.setInd_inedita(body.ind_inedita());
+        receitas.setInd_inedita(true);
         receitas.setCozinheiro(funcionario); 
         receitas.setCategoria(categoria);
+
         receitasRepository.save(receitas);
 
+        if (body.ingredientes() != null && !body.ingredientes().isEmpty()) {
+            for (IngredienteDTO ingredienteDTO : body.ingredientes()) {
+                Ingredientes ingrediente = new Ingredientes();
+                ingrediente.setNome(ingredienteDTO.nome()); 
+                ingrediente.setDescricao(""); 
+                ingrediente.setReceita(receitas);
+                ingredientesRepository.save(ingrediente);
+            }
+            return ResponseEntity.status(200).body("receita criada");}
+        
         return ResponseEntity.ok().build();
     }
 
