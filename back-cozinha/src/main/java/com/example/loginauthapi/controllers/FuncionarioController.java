@@ -42,16 +42,9 @@ public class FuncionarioController {
     }
 
     @PostMapping("/")
-    public Funcionario create(@RequestBody @Valid RegisterRequestDTO body){
-        Cargo cargo = findByNome(body.nome_cargo());
-
+    public Funcionario create(@RequestBody @Valid RegisterRequestDTO body) {
         Funcionario funcionario = new Funcionario();
-        funcionario.setRg(body.rg());
-        funcionario.setSalario(body.salario());
-        funcionario.setCargo(cargo);
-        funcionario.setNome(body.nome());
-        funcionario.setData_ade(new Date());
-        return funcionarioRepository.save(funcionario);
+        return funcionarioService.criacaoFuncionario(funcionario, body);
     }
 
     @PutMapping("/{id}")

@@ -53,45 +53,49 @@ public class FuncionarioService {
                 .collect(Collectors.toList());
     }
 
-    private Funcionario criacaoFuncionario(Funcionario funcionario, RegisterRequestDTO body){
-        Optional<User> user = userRepository.findByEmail(body.email());
-        
-        if (user.isEmpty()) {
+    public Funcionario criacaoFuncionario(Funcionario funcionario, RegisterRequestDTO body) {
+        Optional<User> userOpt = userRepository.findByEmail(body.email());
+        User user = userOpt.orElseGet(() -> {
             User newUser = new User();
             newUser.setSenha(passwordEncoder.encode(body.senha()));
             newUser.setEmail(body.email());
             newUser.setNome(body.nome());
-            userRepository.save(newUser);
-        
-            Cargo cargo = findByNome(body.nome_cargo());
-            funcionario.setRg(body.rg());
-            funcionario.setSalario(body.salario());
-            funcionario.setCargo(cargo);
-            funcionario.setNome(body.nome());
-            funcionario.setData_ade(new Date());
-            funcionario.setUser(newUser);
-            return funcionarioRepository.save(funcionario);
-        }else{
-            User result = userRepository.findByEmail(body.email()).orElseThrow();
-            Cargo cargo = findByNome(body.nome_cargo());
-            funcionario.setRg(body.rg());
-            funcionario.setSalario(body.salario());
-            funcionario.setCargo(cargo);
-            funcionario.setNome(body.nome());
-            funcionario.setData_ade(new Date());
-            funcionario.setUser(result);
-            return funcionarioRepository.save(funcionario);}
+            User savedUser = userRepository.save(newUser);
+            System.out.println("User saved with ID: " + savedUser.getId_usuario());
+            return savedUser;
+        });
+
+        Cargo cargo = findByNome(body.nome_cargo());
+        if (cargo == null) {
+            throw new IllegalArgumentException("Cargo não encontrado");
+        }
+
+        // Preenche os dados do funcionário
+        funcionario.setRg(body.rg());
+        funcionario.setSalario(body.salario());
+        funcionario.setCargo(cargo);
+        funcionario.setNome(body.nome());
+        funcionario.setNome_fantasia(body.nome_fantasia());
+        funcionario.setData_ade(new Date());
+        funcionario.setUser(user);
+
+        System.out.println("Funcionario antes de salvar: " + funcionario);
+        Funcionario savedFuncionario = funcionarioRepository.save(funcionario);
+        System.out.println("Funcionario depois de salvar: " + savedFuncionario);
+
+        return savedFuncionario;
     }
 
     public Funcionario update(Long id, RegisterRequestDTO body){
-            Cargo cargo = findByNome(body.nome_cargo());
-            Funcionario funcionario = verificaFuncionario(id);
-            funcionario.setRg(body.rg());
-            funcionario.setSalario(body.salario());
-            funcionario.setCargo(cargo);
-            funcionario.setNome(body.nome());
-            funcionario.setData_ade(new Date());
-            return funcionarioRepository.save(funcionario);
+        Cargo cargo = findByNome(body.nome_cargo());
+        Funcionario funcionario = verificaFuncionario(id);
+        funcionario.setRg(body.rg());
+        funcionario.setSalario(body.salario());
+        funcionario.setCargo(cargo);
+        funcionario.setNome(body.nome());
+        funcionario.setNome_fantasia(body.nome_fantasia());
+        funcionario.setData_ade(new Date());
+        return funcionarioRepository.save(funcionario);
     }
     
     public void delete(Long id){
