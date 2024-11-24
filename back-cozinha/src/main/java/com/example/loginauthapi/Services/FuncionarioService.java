@@ -37,8 +37,6 @@ public class FuncionarioService {
 
     public List<FuncionarioResponseDTO> list() {
         List<Funcionario> funcionarios = funcionarioRepository.findAll();
-
-        // Mapeia a lista de funcionários para a lista de DTOs
         return funcionarios.stream()
                 .map(funcionario -> new FuncionarioResponseDTO(
                         funcionario.getId_funcionario(),
@@ -48,7 +46,7 @@ public class FuncionarioService {
                         funcionario.getData_adm(),
                         funcionario.getData_egresso(),
                         funcionario.getNome_fantasia(),
-                        funcionario.getCargo() != null ? funcionario.getCargo().getNome() : null // Pegando o nome do cargo
+                        funcionario.getCargo() != null ? funcionario.getCargo().getNome() : null 
                 ))
                 .collect(Collectors.toList());
     }

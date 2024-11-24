@@ -31,7 +31,6 @@ public class ReceitaService {
 
         return receitas.stream()
                 .map(receita -> {
-                    // Mapeia a lista de ingredientes
                     List<IngredientesResponseDTO> ingredientesDTO = receita.getIngredientes().stream()
                             .map(ingrediente -> new IngredientesResponseDTO(
                                     ingrediente.getId_ingrediente(),
@@ -41,7 +40,6 @@ public class ReceitaService {
 
                     String nomeCategoria = receita.getCategoria() != null ? receita.getCategoria().getDescricao() : null;
 
-                    // Mapeia para o DTO de receitas
                     return new ReceitasResponseDTO(
                         receita.getId_receita(),
                         receita.getNome(),
@@ -50,7 +48,7 @@ public class ReceitaService {
                         receita.getModo_preparo(),
                         receita.getNum_porcao(),
                         receita.getInd_inedita(),
-                        ingredientesDTO,  // Passa a lista de ingredientes mapeada
+                        ingredientesDTO,  
                         nomeCategoria
                     );
                 })
@@ -73,6 +71,9 @@ public class ReceitaService {
     public Categoria findByNome(String nome_categoria){
         return categoriaRepository.findByDescricao(nome_categoria).orElseThrow(()-> 
                                              new RuntimeException("Nome da categoria não encontrado"));
+    }
+    public List<Receitas> findByIds(List<Long> ids) {
+        return receitasRepository.findAllById(ids);
     }
 
 }

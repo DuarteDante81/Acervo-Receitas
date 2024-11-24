@@ -2,6 +2,7 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,8 +40,8 @@ public class Funcionario {
 	private Date data_egresso;
 	private String nome_fantasia;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id_usuario")
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

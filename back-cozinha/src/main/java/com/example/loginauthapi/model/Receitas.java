@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -24,18 +25,18 @@ public class Receitas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_receita;
 
-    //colocar como unique depois
-    @Column(nullable = false)  
+    
+    @Column(nullable = false, unique = true)  
     private String nome;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false) 
     private Date data_inclusao;
 
-    @Column(nullable = false)  
+    @Column(nullable = false,length = 600)  
     private String descricao;
 
-    @Column(nullable = false)  
+    @Column(nullable = false, length = 600)  
     private String modo_preparo;
 
     @Column(nullable = false)
@@ -63,6 +64,9 @@ public class Receitas {
     @ManyToOne
     @JoinColumn(name = "categoria_id") 
     private Categoria categoria;
+
+    @ManyToMany(mappedBy = "receitas")
+    private List<Livros> livros;
 
     // Getters e Setters
 
