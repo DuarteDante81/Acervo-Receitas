@@ -53,34 +53,30 @@ public class FuncionarioService {
                 .collect(Collectors.toList());
     }
 
-    private Funcionario criacaoFuncionario(Funcionario funcionario, RegisterRequestDTO body){
-        Optional<User> user = userRepository.findByEmail(body.email());
-        
-        if (user.isEmpty()) {
+    private Funcionario criacaoFuncionario(Funcionario funcionario, RegisterRequestDTO body) {
+        Optional<User> userOpt = userRepository.findByEmail(body.email());
+        User user = userOpt.orElseGet(() -> {
             User newUser = new User();
             newUser.setSenha(passwordEncoder.encode(body.senha()));
             newUser.setEmail(body.email());
             newUser.setNome(body.nome());
             userRepository.save(newUser);
-        
-            Cargo cargo = findByNome(body.nome_cargo());
-            funcionario.setRg(body.rg());
-            funcionario.setSalario(body.salario());
-            funcionario.setCargo(cargo);
-            funcionario.setNome(body.nome());
-            funcionario.setData_ade(new Date());
-            funcionario.setUser(newUser);
-            return funcionarioRepository.save(funcionario);
-        }else{
-            User result = userRepository.findByEmail(body.email()).orElseThrow();
-            Cargo cargo = findByNome(body.nome_cargo());
-            funcionario.setRg(body.rg());
-            funcionario.setSalario(body.salario());
-            funcionario.setCargo(cargo);
-            funcionario.setNome(body.nome());
-            funcionario.setData_ade(new Date());
-            funcionario.setUser(result);
-            return funcionarioRepository.save(funcionario);}
+            return newUser;
+        });
+    
+        Cargo cargo = findByNome(body.nome_cargo());
+        if (cargo == null) {
+            throw new IllegalArgumentException("Cargo não encontrado");
+        }
+    
+        funcionario.setRg(body.rg());
+        funcionario.setSalario(body.salario());
+        funcionario.setCargo(cargo);
+        funcionario.setNome(body.nome());
+        funcionario.setData_ade(new Date());
+        funcionario.setUser(user);
+    
+        return funcionarioRepository.save(funcionario);
     }
 
     public Funcionario update(Long id, RegisterRequestDTO body){
