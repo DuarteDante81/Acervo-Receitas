@@ -73,6 +73,7 @@ public class FuncionarioService {
         funcionario.setSalario(body.salario());
         funcionario.setCargo(cargo);
         funcionario.setNome(body.nome());
+        funcionario.setNome_fantasia(body.nome_fantasia());
         funcionario.setData_ade(new Date());
         funcionario.setUser(user);
     
@@ -86,6 +87,7 @@ public class FuncionarioService {
             funcionario.setSalario(body.salario());
             funcionario.setCargo(cargo);
             funcionario.setNome(body.nome());
+            funcionario.setNome_fantasia(body.nome_fantasia());
             funcionario.setData_ade(new Date());
             return funcionarioRepository.save(funcionario);
     }
