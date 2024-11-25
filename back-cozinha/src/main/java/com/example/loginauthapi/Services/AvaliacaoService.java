@@ -1,5 +1,6 @@
 package com.example.loginauthapi.Services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.loginauthapi.dto.AvaliacaoRequestDTO;
 import com.example.loginauthapi.dto.AvaliacaoResponseDTO;
 import com.example.loginauthapi.model.Avaliacao;
 import com.example.loginauthapi.model.Receitas;
@@ -45,17 +47,37 @@ public class AvaliacaoService {
         return AvaliacaoSalva;
 
     }
+    public Avaliacao update(Long id,AvaliacaoRequestDTO body){
+        Avaliacao avaliacao =  avaliacaoRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Degustação não encontrada"));
+        Avaliacao AvaliacaoSalva = avaliacaoRepository.save(avaliacao);
+        avaliacao.setNota(body.nota());
+        avaliacao.setDescricao(body.descricao());
+        avaliacao.setData_degustacao(new Date());
+        mediaNotas(avaliacao.getReceita());
+
+        return AvaliacaoSalva;
+
+    }
 
     private void mediaNotas(Receitas receita) {
+        // Verifica se a receita não é null e calcula a média
         Optional<Double> mediaNotas = receitasRepository.mediaNotas(receita.getId_receita());
-        receita.setMediaNota(0.0);
+    
         if (mediaNotas.isPresent()) {
-            receita.setMediaNota(0.0);
-            receita.setMediaNota(mediaNotas.get());
+            receita.setMediaNota(mediaNotas.get()); // Atualiza a média das notas com o valor calculado
         } else {
-            receita.setMediaNota(0.0);
+            receita.setMediaNota(0.0); // Se não houver notas, define como 0
         }
-
+    
+        // Salva a receita com a nova média
         receitasRepository.save(receita);
+        receitasRepository.flush();
+    }
+
+    public void delete(Long id){
+        Avaliacao avaliacao =  avaliacaoRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Degustação não encontrada"));
+         avaliacaoRepository.delete(avaliacao);
     }
 }

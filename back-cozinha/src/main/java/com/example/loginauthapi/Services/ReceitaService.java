@@ -1,16 +1,21 @@
 package com.example.loginauthapi.Services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.loginauthapi.dto.IngredienteDTO;
 import com.example.loginauthapi.dto.IngredientesResponseDTO;
+import com.example.loginauthapi.dto.ReceitasRequestDTO;
 import com.example.loginauthapi.dto.ReceitasResponseDTO;
 import com.example.loginauthapi.model.Categoria;
+import com.example.loginauthapi.model.Ingredientes;
 import com.example.loginauthapi.model.Receitas;
 import com.example.loginauthapi.repositories.CategoriaRepository;
+import com.example.loginauthapi.repositories.IngredientesRepository;
 import com.example.loginauthapi.repositories.ReceitasRepository;
 
 @Service
@@ -20,11 +25,11 @@ public class ReceitaService {
     private ReceitasRepository receitasRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private IngredientesRepository ingredientesRepository;
+    
 
-    public Receitas create(Receitas receitas){
-        Receitas result = receitasRepository.saveAndFlush(receitas);
-        return result;
-    }
+    
 
    public List<ReceitasResponseDTO> List() {
         List<Receitas> receitas = receitasRepository.findAll();
@@ -56,9 +61,29 @@ public class ReceitaService {
                 .collect(Collectors.toList());
     }
 
-    public Receitas update(Receitas receitas){
-        Receitas result = receitasRepository.saveAndFlush(receitas);
-        return result;
+    public Receitas update(ReceitasRequestDTO body,Long id){
+        Categoria categoria = findByNome(body.nome_categoria());
+        Receitas receitas = verificaReceitas(id);
+        receitas.setNome(body.nome());
+        receitas.setData_inclusao(new Date());
+        receitas.setDescricao(body.descricao());
+        receitas.setModo_preparo(body.modo_preparo());
+        receitas.setNum_porcao(body.num_porcao());
+        receitas.setInd_inedita(true);
+        receitas.setCategoria(categoria);
+
+        
+
+        if (body.ingredientes() != null && !body.ingredientes().isEmpty()) {
+            for (IngredienteDTO ingredienteDTO : body.ingredientes()) {
+                Ingredientes ingrediente = new Ingredientes();
+                ingrediente.setNome(ingredienteDTO.nome()); 
+                ingrediente.setDescricao(ingredienteDTO.descricao()); 
+                ingrediente.setReceita(receitas);
+                ingredientesRepository.save(ingrediente);
+            }
+        }
+        return receitasRepository.save(receitas);
     } 
 
     public void delete(Long id){

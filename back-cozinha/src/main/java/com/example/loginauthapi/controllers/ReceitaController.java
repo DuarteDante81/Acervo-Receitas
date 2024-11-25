@@ -105,9 +105,10 @@ public class ReceitaController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/")
-    public Receitas update(@RequestBody @Valid Receitas receitas){
-        return receitaService.update(receitas);
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody @Valid ReceitasRequestDTO body, @PathVariable("id") Long id){
+         receitaService.update(body,id);
+        return ResponseEntity.ok("Receita editada!");
     }
 
     @DeleteMapping("/{id}")
