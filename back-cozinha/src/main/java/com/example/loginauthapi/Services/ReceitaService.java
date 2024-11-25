@@ -34,7 +34,8 @@ public class ReceitaService {
                     List<IngredientesResponseDTO> ingredientesDTO = receita.getIngredientes().stream()
                             .map(ingrediente -> new IngredientesResponseDTO(
                                     ingrediente.getId_ingrediente(),
-                                    ingrediente.getNome()
+                                    ingrediente.getNome(),
+                                    ingrediente.getDescricao()
                             ))
                             .collect(Collectors.toList());
 

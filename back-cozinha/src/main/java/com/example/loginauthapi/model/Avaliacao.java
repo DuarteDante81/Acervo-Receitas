@@ -23,7 +23,7 @@ public class Avaliacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_degustacao;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
     private Date data_degustacao;
 
     @Column(nullable = false)

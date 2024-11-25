@@ -96,7 +96,7 @@ public class ReceitaController {
             for (IngredienteDTO ingredienteDTO : body.ingredientes()) {
                 Ingredientes ingrediente = new Ingredientes();
                 ingrediente.setNome(ingredienteDTO.nome()); 
-                ingrediente.setDescricao(""); 
+                ingrediente.setDescricao(ingredienteDTO.descricao()); 
                 ingrediente.setReceita(receitas);
                 ingredientesRepository.save(ingrediente);
             }

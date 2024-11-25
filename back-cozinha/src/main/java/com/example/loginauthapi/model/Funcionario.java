@@ -34,9 +34,9 @@ public class Funcionario {
 	@Column(unique = true)
 	private String rg;
 	private Double salario;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date data_adm;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date data_egresso;
 	private String nome_fantasia;
 	

@@ -1,9 +1,11 @@
 package com.example.loginauthapi.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.loginauthapi.Services.AvaliacaoService;
 import com.example.loginauthapi.Services.UserServices;
+import com.example.loginauthapi.dto.AvaliacaoResponseDTO;
 import com.example.loginauthapi.infra.security.TokenService;
 import com.example.loginauthapi.model.Avaliacao;
 import com.example.loginauthapi.model.Funcionario;
@@ -40,6 +43,11 @@ public class AvaliacaoController {
 
     @Autowired
     private UserServices userService;
+
+    @GetMapping("/")
+    public List<AvaliacaoResponseDTO> List(){
+        return avaliacaoService.List();
+    }
 
     @PostMapping("/")
     public ResponseEntity create(@RequestBody @Valid Avaliacao avaliacao, @RequestHeader("Authorization") String token) {
