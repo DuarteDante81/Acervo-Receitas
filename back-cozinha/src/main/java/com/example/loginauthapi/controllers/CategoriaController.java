@@ -28,6 +28,7 @@ public class CategoriaController {
     public List<Categoria> List(){
         return categoriaService.List();
     }
+    
     @PostMapping("/")
     public Categoria create(@RequestBody @Valid Categoria categoria){
         return categoriaService.create(categoria);
