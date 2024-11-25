@@ -1,5 +1,5 @@
 package com.example.loginauthapi.dto;
 
-public record IngredientesResponseDTO(Long id, String nome) {
+public record IngredientesResponseDTO(Long id, String nome,String descricao) {
 
 }
