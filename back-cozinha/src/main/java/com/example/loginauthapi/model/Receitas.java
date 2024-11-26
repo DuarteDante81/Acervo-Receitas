@@ -58,14 +58,14 @@ public class Receitas {
     @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
     private List<Ingredientes> ingredientes;
 
-    @OneToMany(mappedBy = "receita")
+    @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
     private List<Midia> midia;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id") 
     private Categoria categoria;
 
-    @ManyToMany(mappedBy = "receitas")
+    @ManyToMany(mappedBy = "receitas", cascade = CascadeType.ALL)
     private List<Livros> livros;
 
     // Getters e Setters
@@ -172,6 +172,14 @@ public class Receitas {
 
     public void setMediaNota(Double mediaNota) {
         this.mediaNota = mediaNota;
+    }
+
+    public List<Livros> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(List<Livros> livros) {
+        this.livros = livros;
     }
 
     

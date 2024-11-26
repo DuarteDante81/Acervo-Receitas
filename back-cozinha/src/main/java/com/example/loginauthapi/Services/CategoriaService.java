@@ -25,8 +25,7 @@ public class CategoriaService {
 
     public void delete(Long id){
         Categoria categoria = verificaCategoria(id);
-        categoriaRepository.delete(categoria);
-        
+        categoriaRepository.delete(categoria); 
     }
 
     private Categoria verificaCategoria(Long id){

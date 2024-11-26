@@ -50,6 +50,7 @@ public class ReceitaController {
 
     @Autowired
     private IngredientesRepository ingredientesRepository;
+    
     @Autowired
     private FuncionarioRepository funcionarioRepository; 
 
@@ -110,12 +111,5 @@ public class ReceitaController {
          receitaService.update(body,id);
         return ResponseEntity.ok("Receita editada!");
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
-         receitaService.delete(id);
-         return ResponseEntity.ok().build();
-    }
-
 
 }

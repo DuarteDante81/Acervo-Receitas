@@ -39,10 +39,13 @@ public class LivroController {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+    
     @Autowired
     private ReceitaService receitaService;
+    
     @Autowired
     private LivrosRepository livrosRepository;
+    
     @Autowired
     private LivroService livroService;
 

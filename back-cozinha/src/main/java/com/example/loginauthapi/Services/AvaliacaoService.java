@@ -3,7 +3,6 @@ package com.example.loginauthapi.Services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class AvaliacaoService {
 
     public List<AvaliacaoResponseDTO> List(){
         List<Avaliacao> avaliacoes = avaliacaoRepository.findAll();
-
         return avaliacoes.stream()
                     .map(avaliacao -> new AvaliacaoResponseDTO(
                         avaliacao.getId_degustacao(),
@@ -41,9 +39,7 @@ public class AvaliacaoService {
 
     public Avaliacao create(Avaliacao avaliacao){
         Avaliacao AvaliacaoSalva = avaliacaoRepository.save(avaliacao);
-
         mediaNotas(avaliacao.getReceita());
-
         return AvaliacaoSalva;
 
     }
@@ -61,16 +57,12 @@ public class AvaliacaoService {
     }
 
     private void mediaNotas(Receitas receita) {
-        // Verifica se a receita não é null e calcula a média
         Optional<Double> mediaNotas = receitasRepository.mediaNotas(receita.getId_receita());
-    
-        if (mediaNotas.isPresent()) {
-            receita.setMediaNota(mediaNotas.get()); // Atualiza a média das notas com o valor calculado
-        } else {
-            receita.setMediaNota(0.0); // Se não houver notas, define como 0
-        }
-    
-        // Salva a receita com a nova média
+            if (mediaNotas.isPresent()) {
+                receita.setMediaNota(mediaNotas.get()); 
+            } else {
+                receita.setMediaNota(0.0); 
+            }
         receitasRepository.save(receita);
         receitasRepository.flush();
     }
