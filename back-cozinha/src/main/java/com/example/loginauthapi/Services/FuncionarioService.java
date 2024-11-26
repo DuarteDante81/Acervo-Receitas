@@ -63,9 +63,9 @@ public class FuncionarioService {
         });
     
         Cargo cargo = findByNome(body.nome_cargo());
-        if (cargo == null) {
-            throw new IllegalArgumentException("Cargo não encontrado");
-        }
+            if (cargo == null) {
+                throw new IllegalArgumentException("Cargo não encontrado");
+            }
     
         funcionario.setRg(body.rg());
         funcionario.setSalario(body.salario());

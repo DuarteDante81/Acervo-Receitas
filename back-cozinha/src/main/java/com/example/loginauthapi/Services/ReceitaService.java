@@ -1,7 +1,9 @@
 package com.example.loginauthapi.Services;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,7 @@ public class ReceitaService {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private IngredientesRepository ingredientesRepository;
-    
-
-    
-
+  
    public List<ReceitasResponseDTO> List() {
         List<Receitas> receitas = receitasRepository.findAll();
 
@@ -38,7 +37,6 @@ public class ReceitaService {
                 .map(receita -> {
                     List<IngredientesResponseDTO> ingredientesDTO = receita.getIngredientes().stream()
                             .map(ingrediente -> new IngredientesResponseDTO(
-                                    ingrediente.getId_ingrediente(),
                                     ingrediente.getNome(),
                                     ingrediente.getDescricao()
                             ))
@@ -62,34 +60,52 @@ public class ReceitaService {
     }
 
     public Receitas update(ReceitasRequestDTO body,Long id){
-        Categoria categoria = findByNome(body.nome_categoria());
-        Receitas receitas = verificaReceitas(id);
-        receitas.setNome(body.nome());
-        receitas.setData_inclusao(new Date());
-        receitas.setDescricao(body.descricao());
-        receitas.setModo_preparo(body.modo_preparo());
-        receitas.setNum_porcao(body.num_porcao());
-        receitas.setInd_inedita(true);
-        receitas.setCategoria(categoria);
+    Categoria categoria = findByNome(body.nome_categoria());
+    
+    Receitas receitas = verificaReceitas(id);
+    
+    receitas.setNome(body.nome());
+    receitas.setData_inclusao(new Date());
+    receitas.setDescricao(body.descricao());
+    receitas.setModo_preparo(body.modo_preparo());
+    receitas.setNum_porcao(body.num_porcao());
+    receitas.setInd_inedita(true);
+    receitas.setCategoria(categoria);
 
-        
-
+    List<Ingredientes> ingredientesExistentes = receitas.getIngredientes(); 
+    
         if (body.ingredientes() != null && !body.ingredientes().isEmpty()) {
+            
+            Set<Ingredientes> ingredientesParaSalvar = new HashSet<>();
+
             for (IngredienteDTO ingredienteDTO : body.ingredientes()) {
-                Ingredientes ingrediente = new Ingredientes();
-                ingrediente.setNome(ingredienteDTO.nome()); 
-                ingrediente.setDescricao(ingredienteDTO.descricao()); 
-                ingrediente.setReceita(receitas);
-                ingredientesRepository.save(ingrediente);
+                Ingredientes ingredienteExistente = ingredientesExistentes.stream()
+                    .filter(i -> i.getNome().equals(ingredienteDTO.nome()))  
+                    .findFirst()
+                    .orElse(null);
+
+                if (ingredienteExistente != null) {
+                    ingredienteExistente.setDescricao(ingredienteDTO.descricao());
+                    ingredientesParaSalvar.add(ingredienteExistente);
+                } else {
+                    Ingredientes novoIngrediente = new Ingredientes();
+                    novoIngrediente.setNome(ingredienteDTO.nome());
+                    novoIngrediente.setDescricao(ingredienteDTO.descricao());
+                    novoIngrediente.setReceita(receitas);
+                    ingredientesParaSalvar.add(novoIngrediente);
+                }
+            }
+
+            ingredientesRepository.saveAll(ingredientesParaSalvar);
+            
+            for (Ingredientes ingredienteExistente : ingredientesExistentes) {
+                if (ingredientesParaSalvar.stream().noneMatch(i -> i.getNome().equals(ingredienteExistente.getNome()))) {
+                    ingredientesRepository.delete(ingredienteExistente); 
+                }
             }
         }
-        return receitasRepository.save(receitas);
+    return receitasRepository.save(receitas);
     } 
-
-    public void delete(Long id){
-        Receitas receitas = verificaReceitas(id);
-        receitasRepository.delete(receitas); 
-    }
 
     private Receitas verificaReceitas(Long id){
         return receitasRepository.findById(id).orElseThrow(()-> new RuntimeException("Receita não encontrado"));

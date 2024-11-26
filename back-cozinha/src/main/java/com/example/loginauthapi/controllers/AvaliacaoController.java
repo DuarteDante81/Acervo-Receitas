@@ -66,9 +66,11 @@ public class AvaliacaoController {
             return ResponseEntity.status(404).body("Usuário não encontrado");
         }
 
-        Funcionario degustador = funcionarioRepository.findByUser(user).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+        Funcionario degustador = funcionarioRepository.findByUser(user)
+            .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
 
-        Receitas receita = receitasRepository.findById(avaliacao.getReceita().getId_receita()).orElseThrow(() -> new RuntimeException("Receita não encontrada"));
+        Receitas receita = receitasRepository.findById(avaliacao.getReceita().getId_receita())
+            .orElseThrow(() -> new RuntimeException("Receita não encontrada"));
 
         avaliacao.setDegustador(degustador);
         avaliacao.setData_degustacao(new Date());

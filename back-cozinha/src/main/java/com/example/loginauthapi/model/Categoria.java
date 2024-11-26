@@ -2,7 +2,7 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ public class Categoria {
 	@Column(nullable = false)
 	private String descricao;
 	
-	@OneToMany(mappedBy = "categoria")
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
 	private List<Receitas> receitas;
 
 	public Long getId_categoria() {

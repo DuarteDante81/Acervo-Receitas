@@ -26,8 +26,8 @@ public class CargoService {
     public void delete(Long id){
         Cargo cargo = verificaCargo(id);
         cargoRepository.delete(cargo);
-        
     }
+    
     public Cargo verificaCargo(Long id){
         return cargoRepository.findById(id).orElseThrow(()-> new RuntimeException("Cargo não encontrado"));
     }
