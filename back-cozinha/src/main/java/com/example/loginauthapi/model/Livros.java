@@ -4,6 +4,9 @@ package com.example.loginauthapi.model;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +33,7 @@ public class Livros {
     @Column(unique = true)
     private String cod_isbn;
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date data_criacao;
     @Column(length = 3)
     private String publicado;
@@ -38,7 +42,7 @@ public class Livros {
 	@JoinColumn(name = "funcionario_id")
     private Funcionario editor;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "publicacoes", joinColumns = @JoinColumn(name = "livro_id"), inverseJoinColumns = @JoinColumn(name = "receita_id"))
     private List<Receitas> receitas;
 

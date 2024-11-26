@@ -76,9 +76,8 @@ public class AuthController {
             funcionario.setData_ade(new Date());
             funcionarioRepository.save(funcionario);
             
-            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().build();
+    return ResponseEntity.ok("Registro concluido!!");
     }
 
     private Cargo findByNome(String nome){

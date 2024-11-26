@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +22,12 @@ public class Restaurante {
     private Long id_restaurante;
     @Column(nullable = false)
     private String nome;
+    private String cnpj;
+    private String endereço;
     
-    @ManyToMany
-    @JoinTable(name = "estados_restaurantes", joinColumns = @JoinColumn(name = "restaurante"),
-    inverseJoinColumns = @JoinColumn(name = "estados"))
-    private List<Estados> estados;
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private Estados estados;
 
     public Long getId_restaurante() {
         return id_restaurante;
@@ -43,12 +45,28 @@ public class Restaurante {
         this.nome = nome;
     }
 
-    public List<Estados> getEstados() {
+    public Estados getEstados() {
         return estados;
     }
 
-    public void setEstados(List<Estados> estados) {
+    public void setEstados(Estados estados) {
         this.estados = estados;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getEndereço() {
+        return endereço;
+    }
+
+    public void setEndereço(String endereço) {
+        this.endereço = endereço;
     }
 
     
