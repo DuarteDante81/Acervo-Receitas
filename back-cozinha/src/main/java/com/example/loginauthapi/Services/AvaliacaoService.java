@@ -39,7 +39,6 @@ public class AvaliacaoService {
     }
 
     public void create(AvaliacaoRequestDTO body, Funcionario degustador, Receitas receita) {
-        // Criando uma nova avaliação a partir do DTO recebido
         Avaliacao avaliacao = new Avaliacao();
         avaliacao.setDegustador(degustador);
         avaliacao.setData_degustacao(new Date());
@@ -47,27 +46,21 @@ public class AvaliacaoService {
         avaliacao.setDescricao(body.descricao());
         avaliacao.setNota(body.nota());
 
-        // Salvando a avaliação no banco de dados
         avaliacaoRepository.save(avaliacao);
 
-        // Calculando a média das notas da receita associada
         mediaNotas(receita);
     }
 
-    // Atualização de uma avaliação existente
     public Avaliacao update(Long id, AvaliacaoRequestDTO body) {
         Avaliacao avaliacao = avaliacaoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Degustação não encontrada"));
 
-        // Atualizando os campos da avaliação
         avaliacao.setDescricao(body.descricao());
         avaliacao.setNota(body.nota());
         avaliacao.setData_degustacao(new Date());
 
-        // Salvando a avaliação atualizada
         Avaliacao avaliacaoSalva = avaliacaoRepository.save(avaliacao);
 
-        // Atualizando média de notas da receita
         if (avaliacao.getReceita() != null) {
             mediaNotas(avaliacao.getReceita());
         }
@@ -75,16 +68,13 @@ public class AvaliacaoService {
         return avaliacaoSalva;
     }
 
-    // Cálculo da média de notas para a receita
     private void mediaNotas(Receitas receita) {
         Optional<Double> mediaNotas = receitasRepository.mediaNotas(receita.getId_receita());
         if (mediaNotas.isPresent()) {
             receita.setMediaNota(mediaNotas.get());
         } else {
-            receita.setMediaNota(0.0); // Caso não tenha notas, define a média como 0
+            receita.setMediaNota(0.0); 
         }
-
-        // Salvando a receita com a média atualizada
         receitasRepository.save(receita);
     }
 

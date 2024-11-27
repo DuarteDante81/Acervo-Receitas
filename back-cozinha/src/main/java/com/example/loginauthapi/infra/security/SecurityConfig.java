@@ -30,6 +30,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/restaurantes/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/restaurantes/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/restaurantes/{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/restaurantes/{id}").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/funcionario/").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/funcionario/{id}").permitAll()

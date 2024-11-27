@@ -19,8 +19,10 @@ public class Restaurante {
     private Long id_restaurante;
     @Column(nullable = false)
     private String nome;
+    @Column(unique = true, nullable = false)
     private String cnpj;
-    private String endereço;
+    @Column(nullable = false)
+    private String endereco;
     
     @ManyToOne
     @JoinColumn(name = "estado_id")
@@ -58,12 +60,12 @@ public class Restaurante {
         this.cnpj = cnpj;
     }
 
-    public String getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     

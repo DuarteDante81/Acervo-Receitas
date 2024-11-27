@@ -8,7 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,9 +19,10 @@ public class Estados {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_estado;
     @Column(nullable = false)
-    private String descricao;
+    private String nome;
+    private String sigla;
     
-    @ManyToMany(mappedBy = "estados", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "estados", fetch = FetchType.EAGER)
     private List<Restaurante> restaurante;
 
     public Long getId_estado() {
@@ -32,12 +33,12 @@ public class Estados {
         this.id_estado = id_estado;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public List<Restaurante> getRestaurante() {
@@ -46,6 +47,14 @@ public class Estados {
 
     public void setRestaurante(List<Restaurante> restaurante) {
         this.restaurante = restaurante;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     

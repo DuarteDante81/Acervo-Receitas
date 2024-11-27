@@ -56,7 +56,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body,Funcionario funcionario) {
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequestDTO body,Funcionario funcionario) {
         Optional<User> user = this.repository.findByEmail(body.email());
         
         if (user.isEmpty()) {
