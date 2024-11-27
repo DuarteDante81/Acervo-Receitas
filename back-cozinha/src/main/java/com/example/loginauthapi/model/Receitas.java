@@ -3,6 +3,8 @@ package com.example.loginauthapi.model;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +32,7 @@ public class Receitas {
     private String nome;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false) 
     private Date data_inclusao;
 

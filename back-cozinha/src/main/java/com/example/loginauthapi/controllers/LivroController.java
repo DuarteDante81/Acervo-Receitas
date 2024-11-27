@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,5 +92,46 @@ public class LivroController {
         livrosRepository.save(livro);
 
         return ResponseEntity.status(201).body("Livro criado com sucesso");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid LivrosRequestDTO body, @RequestHeader("Authorization") String token) {
+        String email = tokenService.validateToken(token.replace("Bearer ", ""));
+        if (email == null) {
+            return ResponseEntity.status(401).body("Token inválido ou expirado");
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(404).body("Usuário não encontrado");
+        }
+
+        Funcionario funcionario = funcionarioRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+
+        Livros livro = livrosRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+
+        livro.setTitulo(body.titulo());
+        livro.setCod_isbn(body.cod_isbn());
+        livro.setData_criacao(new Date());  
+        livro.setEditor(funcionario);
+
+        if (body.cod_isbn() != null && !body.cod_isbn().isEmpty()) {
+            livro.setPublicado("Sim");
+        } else {
+            livro.setPublicado("Não");
+        }
+
+        if (body.receitasIds() != null && !body.receitasIds().isEmpty()) {
+            List<Receitas> receitas = receitaService.findByIds(body.receitasIds());
+            livro.setReceitas(receitas);
+        } else {
+            livro.setReceitas(null);
+        }
+
+        livrosRepository.save(livro);
+
+        return ResponseEntity.status(200).body("Livro atualizado com sucesso");
     }
 }

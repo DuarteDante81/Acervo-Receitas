@@ -2,6 +2,8 @@ package com.example.loginauthapi.model;
 
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,8 +37,10 @@ public class Funcionario {
 	private String rg;
 	private Double salario;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date data_adm;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date data_egresso;
 	private String nome_fantasia;
 	
