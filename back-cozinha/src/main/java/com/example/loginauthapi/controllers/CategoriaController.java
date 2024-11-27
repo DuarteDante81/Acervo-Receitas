@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.loginauthapi.Services.CategoriaService;
+import com.example.loginauthapi.dto.CategoriaResponseDTO;
 import com.example.loginauthapi.model.Categoria;
 
 import jakarta.validation.Valid;
@@ -25,7 +26,7 @@ public class CategoriaController {
     private CategoriaService categoriaService;
     
     @GetMapping("/")
-    public List<Categoria> List(){
+    public List<CategoriaResponseDTO> List(){
         return categoriaService.List();
     }
     

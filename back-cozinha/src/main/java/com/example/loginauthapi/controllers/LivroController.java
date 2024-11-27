@@ -58,7 +58,7 @@ public class LivroController {
     }
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody @Valid LivrosRequestDTO body, @RequestHeader("Authorization") String token) {  
+    public ResponseEntity<String> create(@RequestBody @Valid LivrosRequestDTO body, @RequestHeader("Authorization") String token) {  
         String email = tokenService.validateToken(token.replace("Bearer ", ""));
         if (email == null) {
             return ResponseEntity.status(401).body("Token inválido ou expirado");

@@ -1,6 +1,5 @@
 package com.example.loginauthapi.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,7 @@ import com.example.loginauthapi.Services.AvaliacaoService;
 import com.example.loginauthapi.Services.UserServices;
 import com.example.loginauthapi.dto.AvaliacaoRequestDTO;
 import com.example.loginauthapi.dto.AvaliacaoResponseDTO;
-import com.example.loginauthapi.dto.ReceitasRequestDTO;
 import com.example.loginauthapi.infra.security.TokenService;
-import com.example.loginauthapi.model.Avaliacao;
 import com.example.loginauthapi.model.Funcionario;
 import com.example.loginauthapi.model.Receitas;
 import com.example.loginauthapi.model.User;
@@ -56,47 +53,39 @@ public class AvaliacaoController {
 
     @PostMapping("/")
     public ResponseEntity<String> create(
-            @RequestBody @Valid AvaliacaoRequestDTO body, 
-            @RequestHeader("Authorization") String token) {
+            @RequestBody @Valid AvaliacaoRequestDTO body,@RequestHeader("Authorization") String token) {
 
-        // Validação do token
         String email = tokenService.validateToken(token.replace("Bearer ", ""));
         if (email == null) {
             return ResponseEntity.status(401).body("Token inválido ou expirado");
         }
 
-        // Buscando o usuário
         User user = userService.findByEmail(email);
         if (user == null) {
             return ResponseEntity.status(404).body("Usuário não encontrado");
         }
 
-        // Buscando o funcionário (degustador)
         Funcionario degustador = funcionarioRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
 
-        // Buscando a receita associada à avaliação
         Receitas receita = receitasRepository.findById(body.id_receita())
                 .orElseThrow(() -> new RuntimeException("Receita não encontrada"));
 
-        // Criando a avaliação com o DTO (o serviço vai tratar de salvar a avaliação)
         avaliacaoService.create(body, degustador, receita);
 
         return ResponseEntity.ok("Avaliação adicionada com sucesso!");
     }
 
-    // Endpoint para atualizar uma avaliação existente
     @PutMapping("/{id}")
     public ResponseEntity<String> update(
-            @RequestBody @Valid AvaliacaoRequestDTO body, 
-            @PathVariable("id") Long id) {
-        // Atualizando a avaliação
+            @RequestBody @Valid AvaliacaoRequestDTO body, @PathVariable("id") Long id) {
+
         avaliacaoService.update(id, body);
         return ResponseEntity.ok("Avaliação editada com sucesso!");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id){
+    public ResponseEntity<String> delete(@PathVariable("id") Long id){
        avaliacaoService.delete(id);
         return ResponseEntity.ok("Avaliação deletada!!");
     }

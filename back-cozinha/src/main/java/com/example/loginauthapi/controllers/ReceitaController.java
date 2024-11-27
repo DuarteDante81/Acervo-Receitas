@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +61,7 @@ public class ReceitaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody @Valid ReceitasRequestDTO body, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> create(@RequestBody @Valid ReceitasRequestDTO body, @RequestHeader("Authorization") String token) {
         String email = tokenService.validateToken(token.replace("Barear ", ""));
 
         if (email == null) {
@@ -107,7 +106,7 @@ public class ReceitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody @Valid ReceitasRequestDTO body, @PathVariable("id") Long id){
+    public ResponseEntity<String> update(@RequestBody @Valid ReceitasRequestDTO body, @PathVariable("id") Long id){
          receitaService.update(body,id);
         return ResponseEntity.ok("Receita editada!");
     }
