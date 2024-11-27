@@ -115,7 +115,22 @@ public class ReceitaService {
                                              new RuntimeException("Nome da categoria não encontrado"));
     }
     public List<Receitas> findByIds(List<Long> ids) {
-        return receitasRepository.findAllById(ids);
+        if (ids == null || ids.isEmpty()) {
+            throw new IllegalArgumentException("A lista de IDs não pode ser vazia.");
+        }
+
+        // Buscar as receitas com os IDs fornecidos
+        List<Receitas> receitas = receitasRepository.findAllById(ids);
+
+        // Verificar se o número de receitas retornadas é igual ao número de IDs fornecidos
+        if (receitas.size() != ids.size()) {
+            // Se algum ID não for encontrado, lançar uma exceção
+            List<Long> foundIds = receitas.stream().map(Receitas::getId_receita).collect(Collectors.toList());
+            ids.removeAll(foundIds); // IDs que não foram encontrados
+            throw new RuntimeException("Não foram encontradas as receitas para os IDs: " + ids);
+        }
+
+        return receitas;
     }
 
 }
