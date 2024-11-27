@@ -26,7 +26,6 @@ import com.example.loginauthapi.model.Receitas;
 import com.example.loginauthapi.model.User;
 import com.example.loginauthapi.repositories.FuncionarioRepository;
 import com.example.loginauthapi.repositories.LivrosRepository;
-import com.example.loginauthapi.repositories.ReceitasRepository;
 
 import jakarta.validation.Valid;
 
@@ -49,8 +48,6 @@ public class LivroController {
     @Autowired
     private LivrosRepository livrosRepository;
     
-    @Autowired
-    private ReceitasRepository receitasRepository;
     @Autowired
     private LivroService livroService;
 
@@ -91,7 +88,7 @@ public class LivroController {
             List<Receitas> receitas = receitaService.findByIds(body.receitasIds());
             livro.setReceitas(receitas);
         } else {
-            livro.setReceitas(null);  // Caso o usuário envie uma lista vazia, as receitas associadas serão removidas
+            livro.setReceitas(null);  
         }
 
         livrosRepository.save(livro);
