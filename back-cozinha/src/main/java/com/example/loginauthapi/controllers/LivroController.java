@@ -86,7 +86,9 @@ public class LivroController {
 
         if (body.receitasIds() != null && !body.receitasIds().isEmpty()) {
             List<Receitas> receitas = receitaService.findByIds(body.receitasIds());
-            livro.setReceitas(receitas);  
+            livro.setReceitas(receitas);
+        } else {
+            livro.setReceitas(null);  
         }
 
         livrosRepository.save(livro);
