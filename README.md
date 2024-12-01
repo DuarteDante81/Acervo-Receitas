@@ -9,7 +9,7 @@ Agora deve-se configurar o aplication-properties, em spring.datasource.url=jdbc:
 
 o banco ja deve ter sido criado no mysqlworckbench, com isso deve ser colocado o username e a senha do seu mysql, exemplo: spring.datasource.username=root spring.datasource.password=123
 
-Com tudo pronto, você deve iniciar o spring e todas as tabelas serão criadas AUTOMATICAMENTE dentro do banco, você deverá esperar a criação completa das tabelas antes de testar qualquer coisa.
+  Com tudo pronto, você deve iniciar o spring e todas as tabelas serão criadas pelo HIBERNATE QUE É UMA DEPENDENCIA DO JAVA SPRING dentro do banco, você deverá esperar a criação completa das tabelas antes de testar qualquer coisa.
 
 para testar o CRUD sem a utilização do front, deve-se usar um software como o postman(foi o que usei), nele você deve colocar a rota do endpoint, como por exemplo em cargos: http//localhost:8080/cargo, com a rota estabelecida você coloca em metodo post e em body, coloque pra enviar em json, na criação do cargo deve ficar assim: {"nome":"admin"}.
 
