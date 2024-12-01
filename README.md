@@ -11,7 +11,7 @@ o banco ja deve ter sido criado no mysqlworckbench, com isso deve ser colocado o
 
 Com tudo pronto, você deve iniciar o spring e todas as tabelas serão criadas AUTOMATICAMENTE dentro do banco, você deverá esperar a criação completa das tabelas antes de testar qualquer coisa.
 
-para testar o CRUD sem a utilização do front, deve-se usar um software como o postman(foi o que usei), nele você deve colocar a rota do endpoint, como por exemplo em cargos: http://localhost:8080/cargo, com a rota estabelecida você coloca em metodo post e em body, coloque pra enviar em json, na criação do cargo deve ficar assim: {"nome":"admin"}.
+para testar o CRUD sem a utilização do front, deve-se usar um software como o postman(foi o que usei), nele você deve colocar a rota do endpoint, como por exemplo em cargos: http//localhost:8080/cargo, com a rota estabelecida você coloca em metodo post e em body, coloque pra enviar em json, na criação do cargo deve ficar assim: {"nome":"admin"}.
 
 você consegue ver o que deve ser enviado pelo Json nos requestDTOS criados, e quais endpoints usar nos controllers, tudo deve ser enviado pelo formato json.
 
